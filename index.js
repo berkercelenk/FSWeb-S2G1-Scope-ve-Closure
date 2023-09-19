@@ -45,7 +45,10 @@ function skorArtirici() {
 }
 
 const skor1 = skorArtirici();
-
+console.log(skor1());
+console.log(skor1());
+console.log(skor1());
+console.log(skor1());
 // skor2 kodları
 let skor = 0;
 
@@ -53,7 +56,9 @@ function skor2() {
   return skor++;
 }
 
-
+console.log(skor2())
+console.log(skor2())
+console.log(skor2())
 /* Görev 2: takimSkoru() 
 Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
   1. Bir çeyrekte bir takımın ürettiği skoru rastgele(random) elde eden bir sonuc dönünüz(return)
@@ -64,10 +69,11 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru(){
+   let sayi= Math.floor(Math.random()*16+10) //math.random 0,... ile 0.999 arasında sayı verir. 
+    return sayi;
 }
-
+console.log(takimSkoru())
 
 
 
@@ -86,11 +92,19 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(takimSkoru, quart){
+ let EvSahibi=0 ,  KonukTakim = 0;
+ for (let i = 0; i<quart; i++) {
+EvSahibi += takimSkoru();
+KonukTakim = KonukTakim+ takimSkoru();
+ }
+ return {
+  "EvSahibi": EvSahibi,
+  "KonukTakim": KonukTakim
+ }
 }
 
-
+console.log(macSonucu(takimSkoru,4))
 
 
 
@@ -109,10 +123,14 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
-
+function periyotSkoru(callback) {
+  let sonuc = {
+    EvSahibi:callback(),
+    KonukTakim:callback()
+  }
+return sonuc
 }
+console.log(periyotSkoru(takimSkoru))
 
 
 /* Zorlayıcı Görev 5: skorTabelasi() 
@@ -146,10 +164,27 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
-}
+function skorTabelasi(periyotSkoru, takimSkoru, periyot) {
+  const skorArray = [];
+  const macSkoru = {
+    EvSahibi: 0, 
+    KonukTakim:0
+  }
+  for (let i = 0; i<= periyot; i++) {
+    const pSkoru = periyotSkoru(takimSkoru);
+    macSkoru.EvSahibi+= pSkoru.EvSahibi;
+    macSkoru.KonukTakim+=pSkoru.KonukTakim;
 
+    const pMetni = `${i}. Periyot : Ev Sahibi ${pSkoru.EvSahibi} - Konuk Takım ${pSkoru.KonukTakim}`
+    skorArray.push(pMetni)
+
+  }
+
+    const pMetni = `Maç Sonucu: Periyot : Ev Sahibi ${macSkoru.EvSahibi} - Konuk Takım ${macSkoru.KonukTakim}`
+skorArray.push(pMetni)
+return skorArray
+}
+console.log(skorTabelasi(periyotSkoru,takimSkoru,4))
 
 
 
